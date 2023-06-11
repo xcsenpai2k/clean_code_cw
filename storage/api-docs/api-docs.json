@@ -1,0 +1,796 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Laravel OpenApi",
+        "description": "L5 Swagger OpenApi description",
+        "contact": {
+            "email": "admin@admin.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api/v1",
+            "description": "Test API"
+        }
+    ],
+    "paths": {
+        "/api": {},
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "description": "login",
+                "operationId": "login",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout",
+                "description": "Log the user out (Invalidate the token).",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/user": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "show user",
+                "description": "Get the authenticated User.",
+                "operationId": "showMe",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/customer": {
+            "get": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Get list customers",
+                "description": "Get list customers",
+                "operationId": "showListCustomer",
+                "parameters": [
+                    {
+                        "name": "sortField",
+                        "in": "query",
+                        "description": "sort by sortDirection",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sortDirection",
+                        "in": "query",
+                        "description": "sort by sortDirection",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "search by username, email",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/customer/{id}": {
+            "put": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Update Customer",
+                "description": "Update Customer",
+                "operationId": "updateCustomer",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "customer id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "first_name": {
+                                        "type": "string"
+                                    },
+                                    "last_name": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "shippingAddress": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "address1": {
+                                                    "type": "string"
+                                                },
+                                                "address2": {
+                                                    "type": "string"
+                                                },
+                                                "city": {
+                                                    "type": "string"
+                                                },
+                                                "state": {
+                                                    "type": "string"
+                                                },
+                                                "zipcode": {
+                                                    "type": "string"
+                                                },
+                                                "country_code": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "billingAddress": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "address1": {
+                                                    "type": "string"
+                                                },
+                                                "address2": {
+                                                    "type": "string"
+                                                },
+                                                "city": {
+                                                    "type": "string"
+                                                },
+                                                "state": {
+                                                    "type": "string"
+                                                },
+                                                "zipcode": {
+                                                    "type": "string"
+                                                },
+                                                "country_code": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "Delete Customer",
+                "description": "Delete Customer",
+                "operationId": "deleteCustomer",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Customer id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/dashboard/count": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "Get list count in dashboard",
+                "description": "Get list count in dashboard",
+                "operationId": "showDashboardCount",
+                "parameters": [
+                    {
+                        "name": "d",
+                        "in": "query",
+                        "description": "search by day",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/dashboard/top-user-orders": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "top user orders",
+                "description": "Get top user orders",
+                "operationId": "showDashboardUserOrder",
+                "parameters": [
+                    {
+                        "name": "d",
+                        "in": "query",
+                        "description": "search by day",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/dashboard/top-sellers": {
+            "get": {
+                "tags": [
+                    "Dashboard"
+                ],
+                "summary": "get top sellers",
+                "description": "get top sellers",
+                "operationId": "showDashboardSellers",
+                "parameters": [
+                    {
+                        "name": "d",
+                        "in": "query",
+                        "description": "search by day",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/order/{id}": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Show details of order",
+                "description": "Show details of order",
+                "operationId": "showOrder",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "order id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/orders/change-status/{id}": {
+            "put": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Change status order",
+                "description": "Change status order",
+                "operationId": "changeStatusOrder",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "order id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status order",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/order": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Show list of orders",
+                "description": "Show list of orders",
+                "operationId": "showListOrders",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Create Order",
+                "description": "Create Order",
+                "operationId": "storeOrder",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "carts": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "product_id": {
+                                                    "type": "integer"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "order_detail": {
+                                        "properties": {
+                                            "first_name": {
+                                                "type": "string"
+                                            },
+                                            "last_name": {
+                                                "type": "string"
+                                            },
+                                            "phone": {
+                                                "type": "string"
+                                            },
+                                            "address1": {
+                                                "type": "string"
+                                            },
+                                            "address2": {
+                                                "type": "string"
+                                            },
+                                            "city": {
+                                                "type": "string"
+                                            },
+                                            "zipcode": {
+                                                "type": "string"
+                                            },
+                                            "country_code": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/product": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Create Product",
+                "description": "Create Product",
+                "operationId": "storeProduct",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "quantity": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/product/{id}": {
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update Product",
+                "description": "Update Product",
+                "operationId": "updateProduct",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "quantity": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete Product",
+                "description": "Delete Product",
+                "operationId": "deleteProduct",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/report": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Show list of reports",
+                "description": "Show list of reports",
+                "operationId": "showListReport",
+                "parameters": [
+                    {
+                        "name": "d",
+                        "in": "query",
+                        "description": "search by date",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/report/orders": {
+            "get": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Show list of order reports",
+                "description": "Show list of order reports",
+                "operationId": "showListOrderReport",
+                "parameters": [
+                    {
+                        "name": "d",
+                        "in": "query",
+                        "description": "search by date",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": [
+                            "*"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "passport": {
+                "type": "oauth2",
+                "description": "Laravel passport oauth2 security.",
+                "in": "header",
+                "scheme": "https",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://localhost/oauth/authorize",
+                        "tokenUrl": "http://localhost/oauth/token",
+                        "refreshUrl": "http://localhost/token/refresh",
+                        "scopes": []
+                    }
+                }
+            },
+            "bearer_token": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}
